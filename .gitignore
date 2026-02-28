@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+env/
+venv/
+app_debug2/
+
+# codes
+.env
+
+# Log and database
+*.log
+monitoring.db
+
+# VS Code and OS junk
+.vscode/
+.DS_Store

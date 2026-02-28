@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Résultat</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 2rem; }
+      img { max-width: 420px; border-radius: 10px; display: block; margin-bottom: 1rem; }
+      .pill { padding:.5rem 1rem; margin-right:.5rem; border-radius:999px; border:1px solid #aaa; background:#f5f5f5; opacity:.6; cursor:not-allowed; }
+      .btn { padding:.6rem 1rem; border-radius:8px; border:1px solid #222; background:#fff; text-decoration:none; margin-right:1rem; }
+      .btn-feedback { padding:.6rem 1rem; border-radius:8px; border:1px solid #222; background:#90ee90; }
+      .btn-feedback-no { background:#ff7f7f; }
+    </style>
+  </head>
+  <body>
+    <h1>Résultat</h1>
+
+    <img src="{{ image_data_url }}" alt="submitted image" />
+
+    <h2>Classe prédite : {{ predicted_label }}</h2>
+    <p>Confiance : {{ '%.3f'|format(confidence) }}</p>
+
+    <div>
+      {% for c in classes %}
+        <button class="pill" {% if c == predicted_label %}style="opacity:1;"{% endif %} disabled>
+          {{ c }}
+        </button>
+      {% endfor %}
+    </div>
+
+    <h3>Ce résultat est-il correct ?</h3>
+
+    <form action="/feedback" method="post">
+
+      <input type="hidden" name="image_name" value="{{ predicted_label }}">
+      <input type="hidden" name="predicted_label" value="{{ predicted_label }}">
+      <input type="hidden" name="confidence" value="{{ confidence }}">
+
+      <button class="btn-feedback" type="submit" name="feedback" value="correct">Oui — correct</button>
+      <button class="btn-feedback btn-feedback-no" type="submit" name="feedback" value="incorrect">Non — incorrect</button>
+
+    </form>
+
+    <p><a href="/">↩︎ Revenir</a></p>
+  </body>
+</html>
